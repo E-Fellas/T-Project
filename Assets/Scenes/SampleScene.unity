@@ -587,7 +587,7 @@ GameObject:
   - component: {fileID: 341356535}
   - component: {fileID: 341356534}
   - component: {fileID: 341356533}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Chao-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -725,7 +725,7 @@ GameObject:
   - component: {fileID: 599353318}
   - component: {fileID: 599353317}
   - component: {fileID: 599353321}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Pressure plate 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -936,7 +936,7 @@ GameObject:
   - component: {fileID: 786527721}
   - component: {fileID: 786527720}
   - component: {fileID: 786527719}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Escada-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1040,7 +1040,7 @@ GameObject:
   m_Component:
   - component: {fileID: 890402415}
   - component: {fileID: 890402414}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: WindZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1507,11 +1507,12 @@ MonoBehaviour:
   moveSpeed: 8
   gravitForce: -9
   alturaPulo: 5
-  distanciaChao: 0.2
+  distanciaChao: 0.01
   groundMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 8
   disableMovement: 0
+  infiniteJump: 0
 --- !u!1 &1299459000
 GameObject:
   m_ObjectHideFlags: 0
@@ -1629,7 +1630,7 @@ GameObject:
   - component: {fileID: 1404420944}
   - component: {fileID: 1404420943}
   - component: {fileID: 1404420942}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Chao-2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
