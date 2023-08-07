@@ -5,9 +5,14 @@ using UnityEngine;
 public class SimpleProjectile : MonoBehaviour
 {
     public float speed = -2f;
-    public int damage = 10;
+    public int damage = 100;
 
-    public PlayerVariables playerVariables;
+    private PlayerVariables playerVariables;
+
+    private void Start()
+    {
+        playerVariables = PlayerVariableSingleton.GetPlayerVariables();
+    }
 
     private void Update()
     {
