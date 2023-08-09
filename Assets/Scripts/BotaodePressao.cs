@@ -5,41 +5,53 @@ using UnityEngine;
 public class BotaodePressao : MonoBehaviour
 {
     public GameObject SimpleProjectile;
+    public bool projectileOn = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    System.Random rnd = new System.Random();
 
     private void OnCollisionEnter(Collision collision)
     {
         // Verifica se colidiu com o jogador
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && !projectileOn)
         {
-            print("Placa de pressão pressionada!");
+            print("Boa sorte!!!");
 
-            CriarSimpleProjectile();
+            projectileOn= true;
+            StartCoroutine(ProjectileRoutine());
         }
     }
 
-    private void CriarSimpleProjectile()
+    IEnumerator ProjectileRoutine()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            yield return new WaitForSeconds(1);
+            ProjectileXAssis();
+            yield return new WaitForSeconds(2);
+        }
+    }
+
+    private void ProjectileXAssis()
+    {
+        int num = rnd.Next(0, 20);
+        Debug.Log(num);
+
+        for (int i=0; i < 20; i++) 
+        {
+            if (i != num && i != num - 1 && i != num + 1)
+                CriarSimpleProjectile(-i - 10);
+        }
+    }
+
+    private void CriarSimpleProjectile(float x)
     {
         if (SimpleProjectile != null)
         {
             // Define a posição onde o projétil será criado
-            Vector3 spawnPosition = new Vector3(-20f, 4f, 9f);
+            Vector3 spawnPosition = new Vector3(x, 4f, 9f);
 
             // Cria o projétil na posição especificada
             Instantiate(SimpleProjectile, spawnPosition, Quaternion.identity);
-
-            Debug.Log("Projétil criado.");
         }
         else
         {

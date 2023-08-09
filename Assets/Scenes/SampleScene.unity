@@ -950,6 +950,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SimpleProjectile: {fileID: 6149546267662044721, guid: 2021c7ccd15d459448017dc3216a32c4, type: 3}
+  projectileOn: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
