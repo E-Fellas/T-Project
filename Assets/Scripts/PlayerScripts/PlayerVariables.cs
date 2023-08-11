@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerVariables : MonoBehaviour
 {
-    public int vidaMaxima = 1000;
+    public int vidaMaxima = 100;
     public int staminaMaxima = 100;
     public int numeroDeMortes = 0;
     public float sprintSpeed = 10f;
@@ -41,6 +41,11 @@ public class PlayerVariables : MonoBehaviour
     public bool GetestaVivo()
     {
         return estaVivo;
+    }
+
+    public int GetvidaAtual()
+    {
+        return vidaAtual;
     }
 
     public void PlayerRevive()
