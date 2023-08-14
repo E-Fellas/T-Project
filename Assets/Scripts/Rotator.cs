@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Rotator : MonoBehaviour
 {
-    public Vector3 rotateAmount;
+    private Vector3 rotateAmount = new Vector3(50f, 90, 130);
     void Update()
     {
         transform.Rotate(rotateAmount * Time.deltaTime);
