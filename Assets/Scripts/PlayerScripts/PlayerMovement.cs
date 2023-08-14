@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
         if (playerVariables.GetestaVivo() && !disableMovement)
         {
             handleMovement();
+            handleJump();
         }
     }
 
@@ -39,16 +40,22 @@ public class PlayerMovement : MonoBehaviour
 
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
+        //Vetor para angular a movimentacao para os angulos locais do Player
+        Vector3 localDirection = transform.TransformDirection(direction);
+
         if (direction.magnitude >= 0.1f)
         {
-            controller.Move(direction * moveSpeed * Time.deltaTime);
+            controller.Move(localDirection * moveSpeed * Time.deltaTime); //Troque localDirection para direction para alterar entre vetores globais e locais
         }
+    }
 
+    public void handleJump()
+    {
         Vector3 capsuleCenter = transform.position + controller.center;
         float capsuleRadius = controller.radius;
-        float capsuleHeight = controller.height -1.1f; 
+        float capsuleHeight = controller.height - 1.1f;
         //eu legitimamente mão sei pq eu tive que reduzir o tamanho da capsula pra funcionar... se alguem souber arrumar
-        
+
         contatoChao = Physics.CheckCapsule(capsuleCenter, capsuleCenter + Vector3.down * capsuleHeight, capsuleRadius, groundMask);
 
 
@@ -56,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
         {
             forcaGravidade.y = alturaPulo;
         }
-        else if(Input.GetKeyDown(KeyCode.Space) && infiniteJump)
+        else if (Input.GetKeyDown(KeyCode.Space) && infiniteJump)
         {
             forcaGravidade.y = alturaPulo;
         }
