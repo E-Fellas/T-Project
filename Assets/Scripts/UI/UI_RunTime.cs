@@ -13,6 +13,5 @@ public class UI_RunTime : MonoBehaviour
         runTime_UI.text =
         "Run Time" + runningTime.ToString();
 
-
     }
 }
