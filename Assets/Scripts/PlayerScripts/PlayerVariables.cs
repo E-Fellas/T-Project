@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class PlayerVariables : MonoBehaviour
 {
+    public PlayerMovement playerMovement;
+    public UI_RunTime runTime;
+
     public int vidaMaxima = 100;
     public int staminaMaxima = 100;
     public int numeroDeMortes = 0;
     public float sprintSpeed = 10f;
     public bool sprintOn = false;
-
-    public PlayerMovement playerMovement;
 
     private int vidaAtual;
     private int staminaAtual;
@@ -59,6 +60,7 @@ public class PlayerVariables : MonoBehaviour
 
         vidaAtual = vidaMaxima;
         staminaAtual = staminaMaxima;
+        runTime.ResetRunTimeCounter();
         estaVivo = true;
     }
 
