@@ -47,6 +47,10 @@ public class PlayerVariables : MonoBehaviour
     {
         return vidaAtual;
     }
+    public int GetStaminaAtual()
+    {
+        return staminaAtual;
+    }
 
     public void PlayerRevive()
     {
