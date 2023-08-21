@@ -24,7 +24,7 @@ public class UI_RunTime : MonoBehaviour
         else
         {
             runTime_UI.text =
-                "Run Time \n" + runningTime.ToString();
+                "Run Time \n" + runningTime.ToString("F2");
         }
 
        
