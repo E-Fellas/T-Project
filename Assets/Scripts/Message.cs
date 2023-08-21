@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class Message : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public UI_ShowText showText;
+
     void Start()
     {
-        Debug.Log("Bem vindo! Use E para interagir com objetos.");
+        showText.ShowTextOnUI("Bem vindo! Use E para interagir com objetos.");
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
