@@ -5,6 +5,14 @@ using static UnityEditor.Timeline.Actions.MenuPriority;
 
 public class InventoryHandler : MonoBehaviour
 {
+    public static InventoryHandler instance;
+
+    private void Awake()
+    {
+        instance = this;
+    }
+
+
     //Classe para dar tracking, nos itens e em sua quantidade
     [System.Serializable]
     public class InventoryItem

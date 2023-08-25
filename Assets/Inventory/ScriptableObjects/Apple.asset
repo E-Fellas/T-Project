@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2efb71d510a154647935fb75ed1568cc, type: 3}
   m_Name: Apple
   m_EditorClassIdentifier: 
-  id: 0
-  nome: 
-  description: 
-  consumable: 0
+  id: 1
+  nome: Apple
+  description: A red normal Apple
+  consumable: 1
   werable: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 7d14622b36d086d49aae0762e0fcb568, type: 3}
