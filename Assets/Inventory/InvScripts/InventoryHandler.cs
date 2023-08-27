@@ -1,17 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 using static UnityEditor.Timeline.Actions.MenuPriority;
 
 public class InventoryHandler : MonoBehaviour
 {
     public static InventoryHandler instance;
 
+    public UiHandler uiHandler;
+
+    //apenas para teste
+    public Inventory_Obj teste;
+
     private void Awake()
     {
         instance = this;
     }
-
 
     //Classe para dar tracking, nos itens e em sua quantidade
     [System.Serializable]
@@ -30,9 +35,15 @@ public class InventoryHandler : MonoBehaviour
 
         //se ele existir, aumenta a quantidade, se não adiciona na lista
         if(existingItem != null)
-            existingItem.quantity = quantity;
+            existingItem.quantity += quantity;
         else
+        {
             items.Add(new InventoryItem { item = addItem, quantity = quantity });
+            uiHandler.AddItem(addItem);
+        }
+
+        Debug.Log("Adicionado a lista o item: " + addItem.nome + "\nquantidade: " + quantity);
+        Debug.Log("Quantidade atual: " + items.Find(i=> i.item.id == addItem.id).quantity);
     }
 
     public void RemoveItem(Inventory_Obj removeItem, int quantity)
@@ -43,7 +54,7 @@ public class InventoryHandler : MonoBehaviour
         //se for nulo, não existem no inventário
         if(existingItem == null)
         {
-            Debug.Log("Este item não existe no inventário" + removeItem.nome);
+            Debug.Log("Este item não existe no inventário, item.nome: " + removeItem.nome);
             return;
         }
         else
@@ -62,11 +73,32 @@ public class InventoryHandler : MonoBehaviour
 
         //aqui, se zerar a quantidade daquele item, ele sai do inventário
         if(existingItem.quantity == 0)
+        {
             items.Remove(existingItem);
+            uiHandler.ClearSlot();
+        }
+
+        Debug.Log("Removido a lista o item: " + removeItem.nome + "\nquantidade: " + quantity);
+        try
+        {
+            Debug.Log("Quantidade atual: " + items.Find(i => i.item.id == removeItem.id).quantity);
+        }
+        catch
+        {
+            Debug.Log("Cabo o item ;-;");
+        }
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.P))
+        {
+            AddItem(teste, 1);
+        }
 
-
-
-
+        if (Input.GetKeyUp(KeyCode.O))
+        {
+            RemoveItem(teste, 1);
+        }
+    }
 }
