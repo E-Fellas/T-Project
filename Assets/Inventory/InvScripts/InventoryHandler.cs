@@ -7,8 +7,10 @@ using static UnityEditor.Timeline.Actions.MenuPriority;
 public class InventoryHandler : MonoBehaviour
 {
     public static InventoryHandler instance;
-
     public UiHandler uiHandler;
+
+    //vizualição na UI
+    public UI_ShowText uI_ShowText;
 
     //apenas para teste
     public Inventory_Obj teste;
@@ -43,7 +45,11 @@ public class InventoryHandler : MonoBehaviour
         }
 
         Debug.Log("Adicionado a lista o item: " + addItem.nome + "\nquantidade: " + quantity);
-        Debug.Log("Quantidade atual: " + items.Find(i=> i.item.id == addItem.id).quantity);
+
+        //pra mostrar na UI
+        string texto = "Quantidade atual: " + items.Find(i => i.item.id == addItem.id).quantity.ToString();
+        Debug.Log(texto);
+        uI_ShowText.ShowTextOnUI(texto);
     }
 
     public void RemoveItem(Inventory_Obj removeItem, int quantity)
@@ -78,14 +84,15 @@ public class InventoryHandler : MonoBehaviour
             uiHandler.ClearSlot();
         }
 
-        Debug.Log("Removido a lista o item: " + removeItem.nome + "\nquantidade: " + quantity);
+        Debug.Log("Removido da lista o item: " + removeItem.nome + "\nquantidade: " + quantity);
         try
         {
             Debug.Log("Quantidade atual: " + items.Find(i => i.item.id == removeItem.id).quantity);
         }
         catch
         {
-            Debug.Log("Cabo o item ;-;");
+            Debug.Log("Quantidade atual: 0");
+            uI_ShowText.ShowTextOnUI("Cabo o item ;-;");
         }
     }
 
