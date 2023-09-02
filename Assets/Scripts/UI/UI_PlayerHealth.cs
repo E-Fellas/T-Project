@@ -18,6 +18,16 @@ public class UI_PlayerHealth : MonoBehaviour
 
     void Update()
     {
+        if (slider.value <= slider.minValue)
+        {
+            fillImage.enabled = false;
+        }
+
+        if (slider.value > slider.minValue && !fillImage.enabled)
+        {
+            fillImage.enabled = true;
+        }
+
         healthText.text = "Health: " + playerVariables.GetvidaAtual();            
         float fillValue = playerVariables.GetvidaAtual() / playerVariables.vidaMaxima;
         slider.value = fillValue;
