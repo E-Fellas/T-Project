@@ -10,9 +10,6 @@ public class UI_ScreenHealth : MonoBehaviour
     
     void Update()
     {
-        healthText.text =
-            "Health: " + playerVariables.GetvidaAtual() +
-            "\nStamina: " + playerVariables.GetStaminaAtual();
-        ;
+        healthText.text = "Health: " + playerVariables.GetvidaAtual();
     }
 }

@@ -7,14 +7,14 @@ public class PlayerVariables : MonoBehaviour
     public PlayerMovement playerMovement;
     public UI_RunTime runTime;
 
-    public int vidaMaxima = 100;
-    public int staminaMaxima = 100;
+    public float vidaMaxima = 100;
+    public float staminaMaxima = 100;
     public int numeroDeMortes = 0;
     public float sprintSpeed = 10f;
     public bool sprintOn = false;
 
-    private int vidaAtual;
-    private int staminaAtual;
+    private float vidaAtual;
+    private float staminaAtual;
     private bool estaVivo = true;
 
     //posição inicial da cena
@@ -44,11 +44,11 @@ public class PlayerVariables : MonoBehaviour
         return estaVivo;
     }
 
-    public int GetvidaAtual()
+    public float GetvidaAtual()
     {
         return vidaAtual;
     }
-    public int GetStaminaAtual()
+    public float GetStaminaAtual()
     {
         return staminaAtual;
     }
@@ -64,7 +64,7 @@ public class PlayerVariables : MonoBehaviour
         estaVivo = true;
     }
 
-    public void ReceberDano(int dano)
+    public void ReceberDano(float dano)
     {
         if (!estaVivo)
             return;
