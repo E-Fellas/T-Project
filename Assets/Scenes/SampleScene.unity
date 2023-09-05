@@ -958,7 +958,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 511, y: -173}
+  m_AnchoredPosition: {x: 511, y: 0}
   m_SizeDelta: {x: 1920, y: 1201}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &322836900
@@ -1359,7 +1359,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 301.4469, y: 77}
+  m_AnchoredPosition: {x: 301.4469, y: 0}
   m_SizeDelta: {x: 602.89624, y: 74.788086}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &500687456
@@ -1529,7 +1529,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -396, y: 128}
+  m_AnchoredPosition: {x: -396, y: 0}
   m_SizeDelta: {x: 350, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &507307948
@@ -2578,7 +2578,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -376, y: -128}
+  m_AnchoredPosition: {x: -376, y: 0}
   m_SizeDelta: {x: 350, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &965186649
@@ -4956,7 +4956,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1880716792
 GameObject:
@@ -5639,6 +5639,103 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b166956d4530eaa47a319c0d276ea3d9, type: 3}
+--- !u!1001 &8273285308457787797
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3205813371449925857, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
+      propertyPath: bgm
+      value: ElevatorMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 3205813371449925857, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
+      propertyPath: audios.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3205813371449925857, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
+      propertyPath: audios.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: de046498ac593294791785ab5954e1cf, type: 3}
+    - target: {fileID: 3205813371449925857, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
+      propertyPath: audios.Array.data[0].loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3205813371449925857, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
+      propertyPath: audios.Array.data[0].name
+      value: ElevatorMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 3205813371449925857, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
+      propertyPath: audios.Array.data[1].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 53318aa8ab9a5e5439eb232500e381cc, type: 3}
+    - target: {fileID: 3205813371449925857, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
+      propertyPath: audios.Array.data[1].name
+      value: Damage
+      objectReference: {fileID: 0}
+    - target: {fileID: 3205813371449925857, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
+      propertyPath: audios.Array.data[0].volume
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3205813371449925857, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
+      propertyPath: audios.Array.data[1].volume
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591131230403922834, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591131230403922834, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591131230403922834, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591131230403922834, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591131230403922834, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591131230403922834, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591131230403922834, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591131230403922834, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591131230403922834, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591131230403922834, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591131230403922834, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7454372124764785301, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
+      propertyPath: m_Name
+      value: AudioManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 477455789b54f5b4388e4ad18c062132, type: 3}
 --- !u!1001 &9140039438130569411
 PrefabInstance:
   m_ObjectHideFlags: 0
