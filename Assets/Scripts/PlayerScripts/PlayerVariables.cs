@@ -71,6 +71,7 @@ public class PlayerVariables : MonoBehaviour
         else
         {
             vidaAtual -= dano;
+            AudioManager.instancia.Play("Damage");
         }
 
         //código para matar o player.
