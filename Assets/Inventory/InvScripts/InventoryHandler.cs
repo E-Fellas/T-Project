@@ -1,19 +1,22 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
+using UnityEngine.UIElements;
 using static UnityEditor.Timeline.Actions.MenuPriority;
 
 public class InventoryHandler : MonoBehaviour
 {
+    public Transform inventoryParent;
     public static InventoryHandler instance;
-    public UiHandler uiHandler;
+    public UiHandler[] uiHandler;
 
     //vizualição na UI
     public UI_ShowText uI_ShowText;
 
     //apenas para teste
     public Inventory_Obj teste;
+    public Inventory_Obj banana;
 
     private void Awake()
     {
@@ -36,12 +39,24 @@ public class InventoryHandler : MonoBehaviour
         InventoryItem existingItem = items.Find(i => i.item.id == addItem.id);
 
         //se ele existir, aumenta a quantidade, se não adiciona na lista
-        if(existingItem != null)
+        if (existingItem != null)
+        {
             existingItem.quantity += quantity;
+
+            //Da Update na UI
+            for (int i = 0; i < uiHandler.Length; i++)
+            {
+                if(addItem.id == uiHandler[i].itemId)
+                {
+                    uiHandler[i].quantity.text = Convert.ToString(items.Find(i => i.item.id == addItem.id).quantity);
+                }
+            }
+        }
         else
         {
+            //a linha abaixo é apenas para teste, deve ser modificado para algo mais seguro
             items.Add(new InventoryItem { item = addItem, quantity = quantity });
-            uiHandler.AddItem(addItem);
+            uiHandler[items.Count -1].AddItem(addItem);
         }
 
         Debug.Log("Adicionado a lista o item: " + addItem.nome + "\nquantidade: " + quantity);
@@ -74,16 +89,33 @@ public class InventoryHandler : MonoBehaviour
             else
             {
                 existingItem.quantity -= quantity;
+
+                //Da Update na UI
+                for (int i = 0; i < uiHandler.Length; i++)
+                {
+                    if (removeItem.id == uiHandler[i].itemId)
+                    {
+                        uiHandler[i].quantity.text = Convert.ToString(items.Find(i => i.item.id == removeItem.id).quantity);
+                    }
+                }
             }
         }
 
         //aqui, se zerar a quantidade daquele item, ele sai do inventário
         if(existingItem.quantity == 0)
         {
-            items.Remove(existingItem);
-            uiHandler.ClearSlot();
+            for (int i = 0; i < uiHandler.Length; i++)
+            {
+                if (uiHandler[i].itemId == removeItem.id)
+                {
+                    items.Remove(existingItem);
+                    uiHandler[i].ClearSlot();
+                    HandleEmptySlot(i);
+                }
+            }
         }
 
+        //Isso é tudo Log, em um futuro pode ser excluído, está aqui apenas para teste, tanto a linha debaixo quanto o try catch
         Debug.Log("Removido da lista o item: " + removeItem.nome + "\nquantidade: " + quantity);
         try
         {
@@ -96,6 +128,37 @@ public class InventoryHandler : MonoBehaviour
         }
     }
 
+    public void HandleEmptySlot(int position)
+    {
+        for(int i = 0; i < 4-position; i++)
+        {
+            Inventory_Obj helper = new Inventory_Obj();
+            try
+            {
+                helper = uiHandler[i + position +1].item;
+
+                uiHandler[i + position].quantity.text = Convert.ToString(items.Find(i => i.item.id == helper.id).quantity);
+                uiHandler[i + position].item = helper;
+                uiHandler[i +position].AddItem(helper);
+
+                uiHandler[i + position +1].ClearSlot();
+            }
+            catch
+            {
+                return;
+            }
+
+        }
+
+
+    }
+
+    public void Start()
+    {
+        uiHandler = inventoryParent.GetComponentsInChildren<UiHandler>();
+    }
+
+    //Este Update deve ser retirado daqui, quando for realizado o Update de Inputs
     private void Update()
     {
         if (Input.GetKeyUp(KeyCode.P))
@@ -106,6 +169,15 @@ public class InventoryHandler : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.O))
         {
             RemoveItem(teste, 1);
+        }
+
+        if(Input.GetKeyDown(KeyCode.L))
+        {
+            AddItem(banana, 1);
+        }
+        if(Input.GetKeyDown(KeyCode.K))
+        {
+            RemoveItem(banana, 1);
         }
     }
 }
