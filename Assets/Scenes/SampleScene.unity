@@ -3385,7 +3385,10 @@ MonoBehaviour:
   staminaMaxima: 100
   numeroDeMortes: 0
   sprintSpeed: 10
+  dashSpeed: 12.5
   sprintOn: 0
+  isDashing: 0
+  dashDuration: 0.4
   posicaoRevive: {x: 0, y: 2, z: 0}
 --- !u!114 &1129444145
 MonoBehaviour:
@@ -3404,7 +3407,7 @@ MonoBehaviour:
   moveSpeed: 8
   gravitForce: -9
   alturaPulo: 5
-  distanciaChao: 0.01
+  distanciaChao: 0.4
   groundMask:
     serializedVersion: 2
     m_Bits: 8

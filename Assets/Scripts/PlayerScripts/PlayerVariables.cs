@@ -11,19 +11,24 @@ public class PlayerVariables : MonoBehaviour
     public float staminaMaxima = 100;
     public int numeroDeMortes = 0;
     public float sprintSpeed = 10f;
+    public float dashSpeed = 5;
     public bool sprintOn = false;
+    public bool isDashing  = false;
+
+    public float dashDuration = 0.01f;
 
     private float vidaAtual;
     private float staminaAtual;
     private bool estaVivo = true;
 
-    //posição inicial da cena
+    //posiï¿½ï¿½o inicial da cena
     public Vector3 posicaoRevive = new Vector3(0f, 2f, 0f);
 
     private void Start()
     {
         vidaAtual = vidaMaxima;
         staminaAtual = staminaMaxima;
+        playerMovement.moveSpeed  =  0;
     }
 
     private void Update()
@@ -33,10 +38,17 @@ public class PlayerVariables : MonoBehaviour
             PlayerRevive();
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && staminaAtual >= 50)
+        if (Input.GetKeyDown(KeyCode.RightShift) && staminaAtual >= 50)
         {
+            
             Sprint();
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && staminaAtual >= 20)
+        {
+            Dash();
+        }        
+        
     }
 
     public bool GetestaVivo()
@@ -55,7 +67,7 @@ public class PlayerVariables : MonoBehaviour
 
     public void PlayerRevive()
     {
-        //teleporta para o local de início da cena
+        //teleporta para o local de inï¿½cio da cena
         StartCoroutine("TeleportePlayer");
 
         vidaAtual = vidaMaxima;
@@ -74,14 +86,14 @@ public class PlayerVariables : MonoBehaviour
             AudioManager.instancia.Play("Damage");
         }
 
-        //código para matar o player.
-        //local temporário!
+        //cï¿½digo para matar o player.
+        //local temporï¿½rio!
         if (vidaAtual <= 0 && estaVivo)
         {
             estaVivo = false;
             numeroDeMortes++;
 
-            print("Você morreu... pressione k para renascer!");
+            print("Vocï¿½ morreu... pressione k para renascer!");
         }
     }
 
@@ -100,7 +112,7 @@ public class PlayerVariables : MonoBehaviour
     {
         sprintOn = true;
         StartCoroutine("SprintCoroutine");
-        staminaAtual = 0;
+        staminaAtual = staminaAtual-20;
         sprintOn = false;
     }
 
@@ -110,4 +122,25 @@ public class PlayerVariables : MonoBehaviour
         yield return new WaitForSeconds(staminaAtual / 50f);
         playerMovement.moveSpeed -= sprintSpeed;
     }
+    public void Dash()
+    {
+        if (!isDashing)
+        {
+            isDashing = true;
+            StartCoroutine(DashCoroutine());
+        }
+    }
+
+    IEnumerator DashCoroutine()
+    {
+        //playerMovement.disableMovement = true;       
+        float originalMoveSpeed = playerMovement.moveSpeed; // Store the current move speed to reset it after the dash
+        playerMovement.moveSpeed = playerMovement.moveSpeed + dashSpeed;
+        //playerVariables.MakeInvulnerable(0.0f); Add MakeInvulnerable Function to playerVariables
+        yield return new WaitForSeconds(dashDuration);        // Wait for the dash duration
+        playerMovement.moveSpeed = originalMoveSpeed;
+        isDashing = false;
+        
+    }
+
 }
