@@ -8,8 +8,6 @@ public class Pause_UI : MonoBehaviour
 
     public GameObject PauseUI;
 
-    public Slider volumeSlider;
-
     // Update is called once per frame
     void Update()
     {
