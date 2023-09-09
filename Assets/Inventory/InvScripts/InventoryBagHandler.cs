@@ -12,11 +12,6 @@ public class InventoryBagHandler : MonoBehaviour
 
     public InventorySelector inventorySelector;
 
-    private void Awake()
-    {
-        instance = this;
-    }
-
     public void UpdateTextUI(Inventory_Obj addItem, int quantity)
     {
         List<InventoryItem> items = inventorySelector.GetItems();
@@ -92,7 +87,7 @@ public class InventoryBagHandler : MonoBehaviour
     {
         List<InventoryItem> items = inventorySelector.GetItems();
 
-        for (int i = 0; i < 4 - position; i++)
+        for (int i = 0; i < 19 - position; i++)
         {
             Inventory_Obj helper = new Inventory_Obj();
             try
@@ -107,6 +102,7 @@ public class InventoryBagHandler : MonoBehaviour
             }
             catch
             {
+                Debug.Log("Crashou o Inventário!!!");
                 return;
             }
         }
