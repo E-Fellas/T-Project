@@ -14,7 +14,7 @@ public class PlayerVariables : MonoBehaviour
     public float dashSpeed = 5;
     public bool sprintOn = false;
     public bool isDashing  = false;
-
+    private bool isInvulnerable = false;
     public float dashDuration = 0.01f;
 
     private float vidaAtual;
@@ -65,6 +65,10 @@ public class PlayerVariables : MonoBehaviour
         return staminaAtual;
     }
 
+    public bool GetisInvulnerable()
+    {
+        return isInvulnerable;
+    }
     public void PlayerRevive()
     {
         //teleporta para o local de in�cio da cena
@@ -78,22 +82,21 @@ public class PlayerVariables : MonoBehaviour
 
     public void ReceberDano(float dano)
     {
-        if (!estaVivo)
+        if (!estaVivo || isInvulnerable)
             return;
         else
         {
             vidaAtual -= dano;
             AudioManager.instancia.Play("Damage");
         }
-
-        //c�digo para matar o player.
-        //local tempor�rio!
+        //codigo para matar o player.
+        //local temporario!
         if (vidaAtual <= 0 && estaVivo)
         {
             estaVivo = false;
             numeroDeMortes++;
 
-            print("Voc� morreu... pressione k para renascer!");
+            print("Voce morreu... pressione K para renascer!");
         }
     }
 
@@ -131,6 +134,7 @@ public class PlayerVariables : MonoBehaviour
         {
             isDashing = true;
             StartCoroutine(DashCoroutine());
+            StartCoroutine(MakeInvulnerable(0.2f)); //Add MakeInvulnerable Function to playerVariables
         }
     }
 
@@ -151,9 +155,15 @@ public class PlayerVariables : MonoBehaviour
         }
         playerMovement.controller.Move(dashDirection * (dashDistance - distanceTraveled));
 
-        //playerVariables.MakeInvulnerable(0.0f); Add MakeInvulnerable Function to playerVariables
         playerMovement.moveSpeed = originalMoveSpeed;
         isDashing = false;
+        yield break;
+    }
+        public IEnumerator MakeInvulnerable(float invulnerableDuration)
+    {        
+        isInvulnerable = true;
+        yield return new WaitForSeconds(invulnerableDuration);
+        isInvulnerable = false;
         yield break;
     }
 }
