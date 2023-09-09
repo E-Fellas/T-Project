@@ -5,10 +5,10 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEditor.Timeline.Actions.MenuPriority;
 
-public class InventoryHandler : MonoBehaviour
+public class InventoryHotBarHandler : MonoBehaviour
 {
     public Transform inventoryParent;
-    public static InventoryHandler instance;
+    public static InventoryHotBarHandler instance;
     public UiHandler[] uiHandler;
 
     //vizualição na UI
