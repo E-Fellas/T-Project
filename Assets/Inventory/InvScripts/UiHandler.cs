@@ -21,7 +21,7 @@ public class UiHandler : MonoBehaviour
     {
         itemId = newItem.id;
 
-        if (newItem.consumable && ConsumableCount <= 4)
+        if (ConsumableCount <= 4)
             HotbarAddItem(newItem);
         else
             InventoryAddItem(newItem);

@@ -15,6 +15,6 @@ MonoBehaviour:
   id: 2
   nome: Banana
   description: A good Banana
-  consumable: 1
+  consumable: 0
   werable: 0
   icon: {fileID: 21300000, guid: 53087c94ac9dfd747b17239a30468370, type: 3}
