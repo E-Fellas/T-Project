@@ -134,10 +134,10 @@ public class PlayerVariables : MonoBehaviour
     IEnumerator DashCoroutine()
     {
         isDashing = true;    
-        float originalMoveSpeed = playerMovement.moveSpeed; // Store the current move speed to reset it after the dash remove
-        playerMovement.moveSpeed *= 2.5f;
+        float originalMoveSpeed = playerMovement.moveSpeed;
+        playerMovement.moveSpeed *= 2.5f;// Fiz a velocidade ser equivalente a 2.5* a normal, mas podemos alterar
         float dashDistance = playerMovement.moveSpeed * dashDuration;
-        Vector3 dashDirection = playerMovement.transform.forward; // You can change the direction as needed
+        Vector3 dashDirection = playerMovement.transform.forward;// Direção a frente da visão do personagem.
         float distanceTraveled = 0f;
         while (distanceTraveled < dashDistance)
         {
@@ -149,7 +149,6 @@ public class PlayerVariables : MonoBehaviour
         playerMovement.controller.Move(dashDirection * (dashDistance - distanceTraveled));
 
         //playerVariables.MakeInvulnerable(0.0f); Add MakeInvulnerable Function to playerVariables
-        //yield return new WaitForSeconds(dashDuration);        // Wait for the dash duration
         playerMovement.moveSpeed = originalMoveSpeed;
         isDashing = false;
         yield break;
