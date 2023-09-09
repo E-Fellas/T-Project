@@ -124,7 +124,7 @@ public class PlayerVariables : MonoBehaviour
     }
     public void Dash()
     {
-        if (!isDashing)
+        if (!isDashing && estaVivo)
         {
             isDashing = true;
             StartCoroutine(DashCoroutine());
@@ -153,5 +153,3 @@ public class PlayerVariables : MonoBehaviour
         isDashing = false;
         yield break;
     }
-
-}
