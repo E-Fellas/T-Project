@@ -30,33 +30,38 @@ public class PlayerMovement : MonoBehaviour
             handleJump();
         }
     }
-
-    public void handleMovement()
+public void handleMovement()
+{
+    if (!playerVariables.isDashing)
     {
-        if (!playerVariables.isDashing)
+        float horizontal = Input.GetAxisRaw("Horizontal");
+        float vertical = Input.GetAxisRaw("Vertical");
+
+        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+
+        // Get the camera's transform
+        Transform cameraTransform = Camera.main.transform;
+
+        // Remove any y-axis movement from the camera's transform
+        Vector3 cameraForward = cameraTransform.forward;
+        cameraForward.y = 0f;
+        cameraForward = cameraForward.normalized;
+
+        // Calculate the direction based on the input and camera's rotation
+        Vector3 calculatedDirection = vertical * cameraForward + horizontal * cameraTransform.right;
+
+        if (calculatedDirection.magnitude >= 0.1f)
         {
-            float horizontal = Input.GetAxisRaw("Horizontal");
-            float vertical = Input.GetAxisRaw("Vertical");
+            controller.Move(calculatedDirection * moveSpeed * Time.deltaTime);
 
-            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-
-            //Vetor para angular a movimentacao para os angulos locais do Player
-            Vector3 localDirection = transform.TransformDirection(direction);
-            
-
-            if (direction.magnitude >= 0.1f)
+            if (controller.velocity != Vector3.zero) 
             {
-                controller.Move(direction * moveSpeed * Time.deltaTime); //Troque localDirection para direction para alterar entre vetores globais e locais
-
-                if (controller.velocity != Vector3.zero) 
-                {
-                    Vector3 horizontalVelocity = new Vector3(controller.velocity.x, 0, controller.velocity.z);
-                    transform.rotation = Quaternion.LookRotation(horizontalVelocity.normalized);
-                }
+                Vector3 horizontalVelocity = new Vector3(controller.velocity.x, 0, controller.velocity.z);
+                transform.rotation = Quaternion.LookRotation(horizontalVelocity.normalized);
             }
         }
     }
-
+}
     public void handleJump()
     {
         Vector3 capsuleCenter = transform.position + controller.center;
