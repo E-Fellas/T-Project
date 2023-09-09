@@ -110,10 +110,13 @@ public class PlayerVariables : MonoBehaviour
 
     public void Sprint()
     {
-        sprintOn = true;
-        StartCoroutine("SprintCoroutine");
-        staminaAtual = staminaAtual-20;
-        sprintOn = false;
+        if (estaVivo)
+        {
+            sprintOn = true;
+            StartCoroutine("SprintCoroutine");
+            staminaAtual = staminaAtual-20;
+            sprintOn = false;
+        }
     }
 
     IEnumerator SprintCoroutine()
@@ -153,3 +156,4 @@ public class PlayerVariables : MonoBehaviour
         isDashing = false;
         yield break;
     }
+}
