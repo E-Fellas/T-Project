@@ -7,11 +7,9 @@ public class PlayerMovement : MonoBehaviour
 {
     public CharacterController controller;
     public PlayerVariables playerVariables;
-
-
     public float moveSpeed = 8f;
     public float gravitForce = -9f;
-
+    public Vector3 lastMoveDirection = Vector3.forward;
     public float alturaPulo = 5f;
 
     private bool contatoChao;
@@ -20,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 forcaGravidade;
     public bool disableMovement = false;
 
-    //caso você queira testar o mapa, ative esta variável.
+    //caso vocï¿½ queira testar o mapa, ative esta variï¿½vel.
     public bool infiniteJump = false;
 
     // Update is called once per frame
@@ -35,17 +33,27 @@ public class PlayerMovement : MonoBehaviour
 
     public void handleMovement()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-
-        //Vetor para angular a movimentacao para os angulos locais do Player
-        Vector3 localDirection = transform.TransformDirection(direction);
-
-        if (direction.magnitude >= 0.1f)
+        if (!playerVariables.isDashing)
         {
-            controller.Move(localDirection * moveSpeed * Time.deltaTime); //Troque localDirection para direction para alterar entre vetores globais e locais
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            float vertical = Input.GetAxisRaw("Vertical");
+
+            Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+
+            //Vetor para angular a movimentacao para os angulos locais do Player
+            Vector3 localDirection = transform.TransformDirection(direction);
+            
+
+            if (direction.magnitude >= 0.1f)
+            {
+                controller.Move(direction * moveSpeed * Time.deltaTime); //Troque localDirection para direction para alterar entre vetores globais e locais
+
+                if (controller.velocity != Vector3.zero) 
+                {
+                    Vector3 horizontalVelocity = new Vector3(controller.velocity.x, 0, controller.velocity.z);
+                    transform.rotation = Quaternion.LookRotation(horizontalVelocity.normalized);
+                }
+            }
         }
     }
 
@@ -54,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 capsuleCenter = transform.position + controller.center;
         float capsuleRadius = controller.radius;
         float capsuleHeight = controller.height - 1.1f;
-        //eu legitimamente mão sei pq eu tive que reduzir o tamanho da capsula pra funcionar... se alguem souber arrumar
+        //eu legitimamente mï¿½o sei pq eu tive que reduzir o tamanho da capsula pra funcionar... se alguem souber arrumar
 
         contatoChao = Physics.CheckCapsule(capsuleCenter, capsuleCenter + Vector3.down * capsuleHeight, capsuleRadius, groundMask);
 

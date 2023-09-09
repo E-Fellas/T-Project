@@ -28,7 +28,7 @@ public class PlayerVariables : MonoBehaviour
     {
         vidaAtual = vidaMaxima;
         staminaAtual = staminaMaxima;
-        playerMovement.moveSpeed  =  0;
+        //playerMovement.moveSpeed  =  0;
     }
 
     private void Update()
@@ -133,14 +133,26 @@ public class PlayerVariables : MonoBehaviour
 
     IEnumerator DashCoroutine()
     {
-        //playerMovement.disableMovement = true;       
-        float originalMoveSpeed = playerMovement.moveSpeed; // Store the current move speed to reset it after the dash
-        playerMovement.moveSpeed = playerMovement.moveSpeed + dashSpeed;
+        isDashing = true;    
+        float originalMoveSpeed = playerMovement.moveSpeed; // Store the current move speed to reset it after the dash remove
+        playerMovement.moveSpeed *= 2.5f;
+        float dashDistance = playerMovement.moveSpeed * dashDuration;
+        Vector3 dashDirection = playerMovement.transform.forward; // You can change the direction as needed
+        float distanceTraveled = 0f;
+        while (distanceTraveled < dashDistance)
+        {
+            float dashMove = playerMovement.moveSpeed * Time.deltaTime;
+            playerMovement.controller.Move(dashDirection * dashMove);
+            distanceTraveled += dashMove;
+            yield return null;
+        }
+        playerMovement.controller.Move(dashDirection * (dashDistance - distanceTraveled));
+
         //playerVariables.MakeInvulnerable(0.0f); Add MakeInvulnerable Function to playerVariables
-        yield return new WaitForSeconds(dashDuration);        // Wait for the dash duration
+        //yield return new WaitForSeconds(dashDuration);        // Wait for the dash duration
         playerMovement.moveSpeed = originalMoveSpeed;
         isDashing = false;
-        
+        yield break;
     }
 
 }
