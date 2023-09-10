@@ -16,25 +16,27 @@ public class Pause_UI : MonoBehaviour
             if (GamePause)
             {
                 Resume();
+                Debug.Log("Set active false");
             } else
             {
                 Pause();
+                Debug.Log("Set active active");
             }
         }
     }
 
     void Resume()
     {
-    PauseUI.SetActive(true);
-    Time.timeScale = 0f;
+    PauseUI.SetActive(false);
+    Time.timeScale = 1f;
     GamePause = false;
     
     }
 
     void Pause()
     {
-    PauseUI.SetActive(false);
-    Time.timeScale = 1f;
+    PauseUI.SetActive(true);
+    Time.timeScale = 0f;
     GamePause = true;
     }
 }
