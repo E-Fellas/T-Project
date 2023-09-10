@@ -11,19 +11,24 @@ public class PlayerVariables : MonoBehaviour
     public float staminaMaxima = 100;
     public int numeroDeMortes = 0;
     public float sprintSpeed = 10f;
+    public float dashSpeed = 5;
     public bool sprintOn = false;
+    public bool isDashing  = false;
+    private bool isInvulnerable = false;
+    public float dashDuration = 0.01f;
 
     private float vidaAtual;
     private float staminaAtual;
     private bool estaVivo = true;
 
-    //posição inicial da cena
+    //posiï¿½ï¿½o inicial da cena
     public Vector3 posicaoRevive = new Vector3(0f, 2f, 0f);
 
     private void Start()
     {
         vidaAtual = vidaMaxima;
         staminaAtual = staminaMaxima;
+        //playerMovement.moveSpeed  =  0;
     }
 
     private void Update()
@@ -33,10 +38,17 @@ public class PlayerVariables : MonoBehaviour
             PlayerRevive();
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && staminaAtual >= 50)
+        if (Input.GetKeyDown(KeyCode.RightShift) && staminaAtual >= 50)
         {
+            
             Sprint();
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && staminaAtual >= 20)
+        {
+            Dash();
+        }        
+        
     }
 
     public bool GetestaVivo()
@@ -53,9 +65,13 @@ public class PlayerVariables : MonoBehaviour
         return staminaAtual;
     }
 
+    public bool GetisInvulnerable()
+    {
+        return isInvulnerable;
+    }
     public void PlayerRevive()
     {
-        //teleporta para o local de início da cena
+        //teleporta para o local de inï¿½cio da cena
         StartCoroutine("TeleportePlayer");
 
         vidaAtual = vidaMaxima;
@@ -66,22 +82,21 @@ public class PlayerVariables : MonoBehaviour
 
     public void ReceberDano(float dano)
     {
-        if (!estaVivo)
+        if (!estaVivo || isInvulnerable)
             return;
         else
         {
             vidaAtual -= dano;
             AudioManager.instancia.Play("Damage");
         }
-
-        //código para matar o player.
-        //local temporário!
+        //codigo para matar o player.
+        //local temporario!
         if (vidaAtual <= 0 && estaVivo)
         {
             estaVivo = false;
             numeroDeMortes++;
 
-            print("Você morreu... pressione k para renascer!");
+            print("Voce morreu... pressione K para renascer!");
         }
     }
 
@@ -98,10 +113,13 @@ public class PlayerVariables : MonoBehaviour
 
     public void Sprint()
     {
-        sprintOn = true;
-        StartCoroutine("SprintCoroutine");
-        staminaAtual = 0;
-        sprintOn = false;
+        if (estaVivo)
+        {
+            sprintOn = true;
+            StartCoroutine("SprintCoroutine");
+            staminaAtual = staminaAtual-20;
+            sprintOn = false;
+        }
     }
 
     IEnumerator SprintCoroutine()
@@ -109,5 +127,43 @@ public class PlayerVariables : MonoBehaviour
         playerMovement.moveSpeed += sprintSpeed;
         yield return new WaitForSeconds(staminaAtual / 50f);
         playerMovement.moveSpeed -= sprintSpeed;
+    }
+    public void Dash()
+    {
+        if (!isDashing && estaVivo)
+        {
+            isDashing = true;
+            StartCoroutine(DashCoroutine());
+            StartCoroutine(MakeInvulnerable(0.2f)); //Add MakeInvulnerable Function to playerVariables
+        }
+    }
+
+    IEnumerator DashCoroutine()
+    {
+        isDashing = true;    
+        float originalMoveSpeed = playerMovement.moveSpeed;
+        playerMovement.moveSpeed *= 2.5f;// Fiz a velocidade ser equivalente a 2.5* a normal, mas podemos alterar
+        float dashDistance = playerMovement.moveSpeed * dashDuration;
+        Vector3 dashDirection = playerMovement.transform.forward;// DireÃ§Ã£o a frente da visÃ£o do personagem.
+        float distanceTraveled = 0f;
+        while (distanceTraveled < dashDistance)
+        {
+            float dashMove = playerMovement.moveSpeed * Time.deltaTime;
+            playerMovement.controller.Move(dashDirection * dashMove);
+            distanceTraveled += dashMove;
+            yield return null;
+        }
+        playerMovement.controller.Move(dashDirection * (dashDistance - distanceTraveled));
+
+        playerMovement.moveSpeed = originalMoveSpeed;
+        isDashing = false;
+        yield break;
+    }
+    public IEnumerator MakeInvulnerable(float invulnerableDuration)
+    {        
+        isInvulnerable = true;
+        yield return new WaitForSeconds(invulnerableDuration);
+        isInvulnerable = false;
+        yield break;
     }
 }
