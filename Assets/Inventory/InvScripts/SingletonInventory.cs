@@ -7,7 +7,7 @@ public class SingletonInventory : MonoBehaviour
 
 
     private static SingletonInventory instance;
-    public InventoryHandler inventoryHandler;
+    public InventoryHotBarHandler inventoryHandler;
 
     private void Awake()
     {
@@ -22,7 +22,7 @@ public class SingletonInventory : MonoBehaviour
         }
     }
 
-    public static InventoryHandler GetInventoryHandler()
+    public static InventoryHotBarHandler GetInventoryHandler()
     {
         return instance.inventoryHandler;
     }
