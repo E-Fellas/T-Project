@@ -159,7 +159,7 @@ public class PlayerVariables : MonoBehaviour
         isDashing = false;
         yield break;
     }
-        public IEnumerator MakeInvulnerable(float invulnerableDuration)
+    public IEnumerator MakeInvulnerable(float invulnerableDuration)
     {        
         isInvulnerable = true;
         yield return new WaitForSeconds(invulnerableDuration);
