@@ -16,11 +16,11 @@ public class Pause_UI : MonoBehaviour
             if (GamePause)
             {
                 Resume();
-                Debug.Log("Set active false");
+                Debug.Log("O jogo esta rodando!");
             } else
             {
                 Pause();
-                Debug.Log("Set active active");
+                Debug.Log("O jogo esta pausado!");
             }
         }
     }
