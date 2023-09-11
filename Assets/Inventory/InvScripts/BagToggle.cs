@@ -14,11 +14,11 @@ public class BagToggle : MonoBehaviour
         {
             if (active)
             {
-                Open();
+                Close();
             }
             else
             {
-                Close();
+                Open();
             }
         }
 
@@ -27,7 +27,7 @@ public class BagToggle : MonoBehaviour
         {
             bag.SetActive(true);
             Time.timeScale = 0f;
-            active = false;
+            active = true;
 
         }
 
@@ -35,7 +35,7 @@ public class BagToggle : MonoBehaviour
         {
             bag.SetActive(false);
             Time.timeScale = 1f;
-            active = true;
+            active = false;
         }
     }
 }
