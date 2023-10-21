@@ -123,6 +123,27 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &16406837 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4205347216896247492, guid: b166956d4530eaa47a319c0d276ea3d9, type: 3}
+  m_PrefabInstance: {fileID: 2053004028246914633}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &16406843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16406837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bb69cc5adb3ba94291ecf26b7533ad0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 20
+  force: 15
+  knockbackDuration: 0.25
+  destroyOnCollision: 0
 --- !u!1 &19897905
 GameObject:
   m_ObjectHideFlags: 0
@@ -14039,6 +14060,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 467399318043399261, guid: b166956d4530eaa47a319c0d276ea3d9, type: 3}
+      propertyPath: knockbackForce
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 467399318043399261, guid: b166956d4530eaa47a319c0d276ea3d9, type: 3}
+      propertyPath: knockbackDuration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 467399318043399261, guid: b166956d4530eaa47a319c0d276ea3d9, type: 3}
+      propertyPath: destroyOnCollision
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4205347216896247492, guid: b166956d4530eaa47a319c0d276ea3d9, type: 3}
       propertyPath: m_Name
       value: Cacto
@@ -14087,10 +14120,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 467399318043399261, guid: b166956d4530eaa47a319c0d276ea3d9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4205347216896247492, guid: b166956d4530eaa47a319c0d276ea3d9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 16406843}
   m_SourcePrefab: {fileID: 100100000, guid: b166956d4530eaa47a319c0d276ea3d9, type: 3}
 --- !u!1001 &4885205142808745492
 PrefabInstance:
@@ -14281,6 +14318,22 @@ PrefabInstance:
     - target: {fileID: 370029847998824946, guid: ec9466a7a8931954bb5015aaefee1b5e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106274254611823298, guid: ec9466a7a8931954bb5015aaefee1b5e, type: 3}
+      propertyPath: force
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106274254611823298, guid: ec9466a7a8931954bb5015aaefee1b5e, type: 3}
+      propertyPath: damage
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106274254611823298, guid: ec9466a7a8931954bb5015aaefee1b5e, type: 3}
+      propertyPath: knockbackForce
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4106274254611823298, guid: ec9466a7a8931954bb5015aaefee1b5e, type: 3}
+      propertyPath: knockbackDuration
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 6152502108194095463, guid: ec9466a7a8931954bb5015aaefee1b5e, type: 3}
       propertyPath: m_Name
