@@ -1577,6 +1577,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beebc3607dda2a84bb9204260736acb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inventorySelector: {fileID: 1729476435}
+  maca: {fileID: 11400000, guid: 93ac5aa5c2c1cb84da95a2c9ab3713f7, type: 2}
 --- !u!1 &250394387
 GameObject:
   m_ObjectHideFlags: 0
@@ -8064,7 +8066,6 @@ GameObject:
   - component: {fileID: 1129444145}
   - component: {fileID: 1129444144}
   - component: {fileID: 1129444146}
-  - component: {fileID: 1129444147}
   - component: {fileID: 1129444148}
   m_Layer: 8
   m_Name: Player
@@ -8262,21 +8263,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 3
---- !u!114 &1129444147
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1129444137}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a280c753d278829449aa01f6b55e582c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  InteractorSource: {fileID: 1129444142}
-  InteractRange: 6
-  SphereRadius: 0
 --- !u!114 &1129444148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8290,7 +8276,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interactionPoint: {fileID: 1415566505}
-  _interactionPointRadius: 0.8
+  _interactionPointRadius: 1.8
   _interactableMask:
     serializedVersion: 2
     m_Bits: 1024
@@ -12682,7 +12668,7 @@ GameObject:
   - component: {fileID: 1741191931}
   - component: {fileID: 1741191937}
   - component: {fileID: 1741191938}
-  m_Layer: 3
+  m_Layer: 0
   m_Name: DeathCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13685,7 +13671,7 @@ GameObject:
   - component: {fileID: 2007015992}
   - component: {fileID: 2007015990}
   - component: {fileID: 2007015989}
-  m_Layer: 7
+  m_Layer: 10
   m_Name: DeathCube_Interactor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
