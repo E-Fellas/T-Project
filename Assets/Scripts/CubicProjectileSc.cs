@@ -9,7 +9,7 @@ public class CubicProjectileSc : MonoBehaviour
 
     private void Start()
     {
-        playerVariables = PlayerVariableSingleton.GetPlayerVariables();
+        playerVariables = PlayerVariablesSingleton.GetPlayerVariables();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -23,7 +23,7 @@ public class CubicProjectileSc : MonoBehaviour
                 playerVariables.ReceberDano(damage);
             }
 
-            // Destroi o projétil
+            // Destroi o projï¿½til
             Destroy(gameObject);
 
             //print de debug

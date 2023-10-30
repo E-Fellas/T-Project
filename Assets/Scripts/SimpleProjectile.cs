@@ -11,12 +11,12 @@ public class SimpleProjectile : MonoBehaviour
 
     private void Start()
     {
-        playerVariables = PlayerVariableSingleton.GetPlayerVariables();
+        playerVariables = PlayerVariablesSingleton.GetPlayerVariables();
     }
 
     private void Update()
     {
-        // Move o projétil ao longo do eixo Z
+        // Move o projï¿½til ao longo do eixo Z
         transform.Translate(Vector3.forward * speed * Time.deltaTime);
     }
 
@@ -31,7 +31,7 @@ public class SimpleProjectile : MonoBehaviour
                 playerVariables.ReceberDano(damage);
             }
 
-            // Destroi o projétil
+            // Destroi o projï¿½til
             Destroy(gameObject);
 
             //print de debug
