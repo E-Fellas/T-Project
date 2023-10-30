@@ -37,8 +37,6 @@ public void handleMovement()
         float horizontal = Input.GetAxisRaw("Horizontal");
         float vertical = Input.GetAxisRaw("Vertical");
 
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
-
         // Get the camera's transform
         Transform cameraTransform = Camera.main.transform;
 

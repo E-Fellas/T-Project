@@ -7,10 +7,6 @@ using UnityEngine;
 
 public class InventorySelector : MonoBehaviour
 {
-    //apenas para teste
-    public Inventory_Obj teste;
-    public Inventory_Obj banana;
-
     public InventoryHotBarHandler hotBar;
     public InventoryBagHandler bag;
 
@@ -112,29 +108,6 @@ public class InventorySelector : MonoBehaviour
         catch
         {
             Debug.Log("Quantidade atual: 0");
-        }
-    }
-
-    //Este Update deve ser retirado daqui, quando for realizado o Update de Inputs
-    private void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.P))
-        {
-            AddItem(teste, 1);
-        }
-
-        if (Input.GetKeyUp(KeyCode.O))
-        {
-            RemoveItem(teste, 1);
-        }
-
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            AddItem(banana, 1);
-        }
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            RemoveItem(banana, 1);
         }
     }
 }
