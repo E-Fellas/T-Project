@@ -5,13 +5,14 @@ using UnityEngine;
 public class DeathCube : MonoBehaviour , IInteractable
 {
     public PlayerVariables playerVariables;
+    [SerializeField] private string _prompt;
 
-    public string InteractionPrompt { get; }
+    public string InteractionPrompt => _prompt;
 
-    public bool Interact(Interactor interactor)
+    public string Interact(Interactor interactor)
     {
         Debug.Log("Voce interagiu com o cubo da morte!");
         playerVariables.ReceberDano(100);
-        return true;
+        return "Voce interagiu com o cubo da morte!";
     }
 }

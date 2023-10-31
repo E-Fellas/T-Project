@@ -5,24 +5,25 @@ using UnityEngine;
 
 public class AppleTree : MonoBehaviour, IInteractable
 {
-    public string InteractionPrompt { get; }
+    [SerializeField] private string _prompt;
+    public string InteractionPrompt => _prompt;
     public InventorySelector inventorySelector;
     public Inventory_Obj item;
     public bool isHarvested = false;
 
-    public bool Interact(Interactor interactor)
+    public string Interact(Interactor interactor)
     {
         if (isHarvested == false)
         {
             inventorySelector.AddItem(item, 1);
             Debug.Log("Colheu Maça!!");
             isHarvested = true;
-            return true;
+            return "Colheu Maça!!";
         }
         else
         {
             Debug.Log("A árvore já foi colhida");
-            return false;
+            return "A árvore já foi colhida";
         }
         
        
