@@ -2,12 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerVariableSingleton : MonoBehaviour
+public class PlayerVariablesSingleton : MonoBehaviour
 {
-    //Este Script apenas existe para que objetos prefab tenham acesso ao Script PlayerVariables existente na cápsula (PlayerObject)
-
-
-    private static PlayerVariableSingleton instance;
+    private static PlayerVariablesSingleton instance;
     public PlayerVariables playerVariables;
 
     private void Awake()
