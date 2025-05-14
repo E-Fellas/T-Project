@@ -12,6 +12,7 @@ public class InputHandler : MonoBehaviour
     public bool inputDash { get; private set; }
     public bool inputReviver { get; private set; }
     public bool inputInteragir { get; private set; }
+    public bool inputAbrirInventario { get; private set; }
 
     // Lógica para verificar inputs pressionados
     void Update()
@@ -23,5 +24,6 @@ public class InputHandler : MonoBehaviour
         inputCorrida = Input.GetKeyDown(KeyCode.LeftShift);
         inputReviver = Input.GetKeyDown(KeyCode.K);
         inputInteragir = Input.GetKeyDown(KeyCode.E);
+        inputAbrirInventario = Input.GetKeyDown(KeyCode.I);
     }
 }
