@@ -5,12 +5,14 @@ using UnityEngine.UIElements;
 
 public class BagToggle : MonoBehaviour
 {
+    public InputHandler inputHandler;
+
     public GameObject bag;
     public bool active = false;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
+        if (inputHandler.inputAbrirInventario)
         {
             if (active)
             {
