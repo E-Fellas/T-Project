@@ -8324,6 +8324,7 @@ GameObject:
   - component: {fileID: 1129444144}
   - component: {fileID: 1129444146}
   - component: {fileID: 1129444148}
+  - component: {fileID: 1129444149}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -8460,6 +8461,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 1129444145}
   runTime: {fileID: 965186649}
+  inputHandler: {fileID: 1129444149}
   vidaMaxima: 100
   staminaMaxima: 100
   numeroDeMortes: 0
@@ -8483,6 +8485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 1129444143}
   playerVariables: {fileID: 1129444144}
+  inputHandler: {fileID: 1129444149}
   moveSpeed: 8
   gravitForce: -9
   lastMoveDirection: {x: 0, y: 0, z: 1}
@@ -8538,7 +8541,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   _interactionPromptUI: {fileID: 853868628}
+  inputHandler: {fileID: 1129444149}
   _numFound: 0
+--- !u!114 &1129444149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1129444137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: facabbddf1bee3848bf2781a0306b372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1139545350
 GameObject:
   m_ObjectHideFlags: 0
@@ -12776,6 +12792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c2e56e0712f7bb4bbc578cd71e0caf8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputHandler: {fileID: 1129444149}
   bag: {fileID: 28443248}
   active: 0
 --- !u!1 &1731304385

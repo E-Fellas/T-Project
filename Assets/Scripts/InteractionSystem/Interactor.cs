@@ -11,6 +11,7 @@ public class Interactor : MonoBehaviour
     [SerializeField] private float _interactionPointRadius = 0.5f;
     [SerializeField] private LayerMask _interactableMask;
     [SerializeField] private UI_InteractPrompt _interactionPromptUI;
+    public InputHandler inputHandler;
     private readonly Collider[] _colliders = new Collider[3];
     [SerializeField] private int _numFound;
 
@@ -33,7 +34,7 @@ public class Interactor : MonoBehaviour
             if (_interactable != null)
             {
                 if (!_interactionPromptUI.IsDisplayed) _interactionPromptUI.SetUp(_interactable.InteractionPrompt);
-                if (Keyboard.current.eKey.wasPressedThisFrame)
+                if (inputHandler.inputInteragir)
                 {
                     _interactionPromptUI.Result(_interactable.Interact(this));
                 }

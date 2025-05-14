@@ -128,6 +128,7 @@ public class InventorySelector : MonoBehaviour
     }
 
     //Este Update deve ser retirado daqui, quando for realizado o Update de Inputs
+    // Apagar depois que testado
     private void Update()
     {
         HandleHotBarInput();

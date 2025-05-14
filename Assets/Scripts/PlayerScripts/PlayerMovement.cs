@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public CharacterController controller;
     public PlayerVariables playerVariables;
+    public InputHandler inputHandler;
     public float moveSpeed = 8f;
     public float gravitForce = -9f;
     public Vector3 lastMoveDirection = Vector3.forward;
@@ -34,8 +35,8 @@ public void handleMovement()
 {
     if (!playerVariables.isDashing)
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        float horizontal = inputHandler.inputHorizontal;
+        float vertical = inputHandler.inputVertical;
 
         Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
 
@@ -72,11 +73,7 @@ public void handleMovement()
         contatoChao = Physics.CheckCapsule(capsuleCenter, capsuleCenter + Vector3.down * capsuleHeight, capsuleRadius, groundMask);
 
 
-        if (Input.GetKeyDown(KeyCode.Space) && contatoChao)
-        {
-            forcaGravidade.y = alturaPulo;
-        }
-        else if (Input.GetKeyDown(KeyCode.Space) && infiniteJump)
+        if (inputHandler.inputPulo && (contatoChao || infiniteJump))
         {
             forcaGravidade.y = alturaPulo;
         }
