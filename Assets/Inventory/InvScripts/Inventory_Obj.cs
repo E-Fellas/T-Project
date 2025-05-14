@@ -8,7 +8,7 @@ public class Inventory_Obj : ScriptableObject
     public int id;
     public string nome;
     public string description;
-    public bool consumable;
-    public bool werable;
+    public bool consumable = false;
+    public bool werable = false;
     public Sprite icon;
 }
