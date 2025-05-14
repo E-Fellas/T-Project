@@ -15,6 +15,6 @@ MonoBehaviour:
   id: 1
   nome: Apple
   description: A red normal Apple
-  consumable: 0
+  consumable: 1
   werable: 0
   icon: {fileID: 21300000, guid: 7d14622b36d086d49aae0762e0fcb568, type: 3}
