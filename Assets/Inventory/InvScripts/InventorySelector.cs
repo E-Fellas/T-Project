@@ -130,6 +130,8 @@ public class InventorySelector : MonoBehaviour
     //Este Update deve ser retirado daqui, quando for realizado o Update de Inputs
     private void Update()
     {
+        HandleHotBarInput();
+
         if (Input.GetKeyUp(KeyCode.P))
         {
             AddItem(teste, 1);
@@ -148,5 +150,34 @@ public class InventorySelector : MonoBehaviour
         {
             RemoveItem(banana, 1);
         }
+    }
+    private void HandleHotBarInput()
+    {
+        for (int i = 0; i < hotBar.uiHandler.Length; i++)
+        {
+            KeyCode key = KeyCode.Alpha1 + i; // KeyCode.Alpha1 (49) até Alpha5 (53), peguei do GPT mesmo, foda-se
+
+            if (Input.GetKeyDown(key))
+            {
+                UiHandler slot = hotBar.uiHandler[i];
+
+                if (slot.item != null)
+                {
+                    Debug.Log($"Usando item da HotBar: {slot.item.nome}");
+
+                    UseItem(slot.item);
+                    RemoveItem(slot.item, 1);
+                }
+                else
+                {
+                    Debug.Log($"Slot {i + 1} da HotBar está vazio.");
+                }
+            }
+        }
+    }
+
+    private void UseItem(Inventory_Obj item)
+    {
+        item.Use();
     }
 }

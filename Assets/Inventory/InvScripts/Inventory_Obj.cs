@@ -11,4 +11,9 @@ public class Inventory_Obj : ScriptableObject
     public bool consumable = false;
     public bool werable = false;
     public Sprite icon;
+
+    public virtual void Use()
+    {
+        Debug.Log($"Item {nome} utilizado");
+    }
 }
