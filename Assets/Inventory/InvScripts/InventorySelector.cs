@@ -25,17 +25,26 @@ public class InventorySelector : MonoBehaviour
         public int quantity;
     }
 
-    public List<InventoryItem> items = new List<InventoryItem>();
+    public List<InventoryItem> itemsBag = new List<InventoryItem>();
+    public List<InventoryItem> itemsHotBar = new List<InventoryItem>();
 
     public List<InventoryItem> GetItems()
     {
-        return items;
+        return itemsBag;
+    }
+
+    public List<InventoryItem> GetItemsHotBar()
+    {
+        return itemsHotBar;
     }
 
     public void AddItem(Inventory_Obj addItem, int quantity)
     {
-        //procura este item no inventário
-        InventoryItem existingItem = items.Find(i => i.item.id == addItem.id);
+        InventoryItem existingItem;
+        if(addItem.consumable)
+            existingItem = itemsHotBar.Find(i => i.item.id == addItem.id);
+        else
+            existingItem = itemsBag.Find(i => i.item.id == addItem.id);
 
         //se ele existir, aumenta a quantidade, se não adiciona na lista
         if (existingItem != null)
@@ -49,19 +58,18 @@ public class InventorySelector : MonoBehaviour
             {
                 bag.UpdateTextUI(addItem, quantity);
             }
-
         }
         else
         {
-            items.Add(new InventoryItem { item = addItem, quantity = quantity });
-
             if (addItem.consumable)
             {
+                itemsHotBar.Add(new InventoryItem { item = addItem, quantity = quantity });
                 hotBar.AddItemUI(addItem, quantity);
                 barCount++;
             }
             else
             {
+                itemsBag.Add(new InventoryItem { item = addItem, quantity = quantity });
                 bag.AddItemUI(addItem, quantity);
                 bagCount++;
             }
@@ -70,8 +78,12 @@ public class InventorySelector : MonoBehaviour
 
     public void RemoveItem(Inventory_Obj removeItem, int quantity)
     {
+        InventoryItem existingItem;
         //procura este item no inventário
-        InventoryItem existingItem = items.Find(i => i.item.id == removeItem.id);
+        if(removeItem.consumable)
+            existingItem = itemsHotBar.Find(i => i.item.id == removeItem.id);
+        else
+            existingItem = itemsBag.Find(i => i.item.id == removeItem.id);
 
         //se for nulo, não existem no inventário
         if (existingItem == null)
@@ -107,7 +119,7 @@ public class InventorySelector : MonoBehaviour
         Debug.Log("Removido da lista o item: " + removeItem.nome + "\nquantidade: " + quantity);
         try
         {
-            Debug.Log("Quantidade atual: " + items.Find(i => i.item.id == removeItem.id).quantity);
+            Debug.Log("Quantidade atual: " + itemsBag.Find(i => i.item.id == removeItem.id).quantity);
         }
         catch
         {

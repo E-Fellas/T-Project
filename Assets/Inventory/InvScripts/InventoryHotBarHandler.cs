@@ -22,7 +22,7 @@ public class InventoryHotBarHandler : MonoBehaviour
 
     public void UpdateTextUI(Inventory_Obj addItem, int quantity)
     {
-        List<InventoryItem> items = inventorySelector.GetItems();
+        List<InventoryItem> items = inventorySelector.GetItemsHotBar();
         InventoryItem existingItem = items.Find(i => i.item.id == addItem.id);
 
         for (int i = 0; i < uiHandler.Length; i++)
@@ -36,7 +36,7 @@ public class InventoryHotBarHandler : MonoBehaviour
 
     public void AddItemUI(Inventory_Obj addItem, int quantity)
     {
-        List<InventoryItem> items = inventorySelector.GetItems();
+        List<InventoryItem> items = inventorySelector.GetItemsHotBar();
         InventoryItem existingItem = items.Find(i => i.item.id == addItem.id);
 
         uiHandler[inventorySelector.barCount].AddItem(addItem);
@@ -46,6 +46,8 @@ public class InventoryHotBarHandler : MonoBehaviour
         {
             if (addItem.id == uiHandler[i].itemId)
             {
+                Debug.Log("Entrou no Ui handler: " + i);
+
                 uiHandler[i].quantity.text = Convert.ToString(items.Find(i => i.item.id == addItem.id).quantity);
             }
         }
@@ -59,7 +61,7 @@ public class InventoryHotBarHandler : MonoBehaviour
 
     public void RemoveItemUI(Inventory_Obj removeItem, int quantity)
     {
-        List<InventoryItem> items = inventorySelector.GetItems();
+        List<InventoryItem> items = inventorySelector.GetItemsHotBar();
 
         //procura este item no inventário
         InventoryItem existingItem = items.Find(i => i.item.id == removeItem.id);
@@ -92,7 +94,7 @@ public class InventoryHotBarHandler : MonoBehaviour
 
     public void HandleEmptySlot(int position)
     {
-        List<InventoryItem> items = inventorySelector.GetItems();
+        List<InventoryItem> items = inventorySelector.GetItemsHotBar();
 
         for (int i = 0; i < 4 - position; i++)
         {
