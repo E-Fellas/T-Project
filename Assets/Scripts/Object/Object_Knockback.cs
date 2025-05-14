@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 
-public class TerrainTrap : MonoBehaviour
+public class Object_Knockback : MonoBehaviour
 {
     public int damage;
     public float force;
+    public float knockbackDuration;
     public bool destroyOnCollision;
 
     private void OnCollisionEnter(Collision collision)
@@ -23,7 +24,7 @@ public class TerrainTrap : MonoBehaviour
             Vector3 direction = (collision.transform.position - transform.position).normalized;
             Vector3 knockback = direction * force;
 
-            controller.Move(knockback);
+            StartCoroutine(ApplyKnockback(controller, knockback, knockbackDuration));
 
             playerVariables.ReceberDano(damage);
 
@@ -33,4 +34,16 @@ public class TerrainTrap : MonoBehaviour
                 Destroy(gameObject);
         }
     }
+
+    IEnumerator ApplyKnockback(CharacterController controller, Vector3 knockback, float duration)
+    {
+        float startTime = Time.time;
+
+        while (Time.time < startTime + duration)
+        {
+            controller.Move(knockback * Time.deltaTime);
+            yield return null; // wait for the next frame
+        }
+    }
 }
+
