@@ -6,6 +6,7 @@ public class PlayerVariables : MonoBehaviour
 {
     public PlayerMovement playerMovement;
     public UI_RunTime runTime;
+    public InputHandler inputHandler;
 
     public float vidaMaxima = 100;
     public float staminaMaxima = 100;
@@ -33,18 +34,18 @@ public class PlayerVariables : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K) && !estaVivo)
+        if (inputHandler.inputReviver && !estaVivo)
         {
             PlayerRevive();
         }
 
-        if (Input.GetKeyDown(KeyCode.RightShift) && staminaAtual >= 50)
+        if (inputHandler.inputCorrida && staminaAtual >= 50)
         {
             
             Sprint();
         }
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && staminaAtual >= 20)
+        if (inputHandler.inputDash && staminaAtual >= 20)
         {
             Dash();
         }        
