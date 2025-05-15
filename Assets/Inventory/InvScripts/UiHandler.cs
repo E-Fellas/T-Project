@@ -21,7 +21,7 @@ public class UiHandler : MonoBehaviour
     {
         itemId = newItem.id;
 
-        if (ConsumableCount <= 4)
+        if (newItem.consumable)
             HotbarAddItem(newItem);
         else
             InventoryAddItem(newItem);
@@ -36,8 +36,6 @@ public class UiHandler : MonoBehaviour
         icon.sprite= null;
         icon.enabled= false;
         quantity.text = null;
-
-        ConsumableCount--;
     }
 
     public void HotbarAddItem (Inventory_Obj newItem)
@@ -51,11 +49,10 @@ public class UiHandler : MonoBehaviour
 
     public void InventoryAddItem(Inventory_Obj newItem)
     {
-        throw new NotImplementedException();
-    }
+        InventoryCount++;
+        item = newItem;
 
-    public int GetQuantity()
-    {
-        return Convert.ToInt16(quantity.text);
+        icon.sprite = item.icon;
+        icon.enabled = true;
     }
 }

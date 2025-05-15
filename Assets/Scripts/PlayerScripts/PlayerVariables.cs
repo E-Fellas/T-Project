@@ -90,15 +90,38 @@ public class PlayerVariables : MonoBehaviour
             vidaAtual -= dano;
             AudioManager.instancia.Play("Damage");
         }
-        //codigo para matar o player.
-        //local temporario!
+
         if (vidaAtual <= 0 && estaVivo)
         {
-            estaVivo = false;
-            numeroDeMortes++;
-
-            print("Voce morreu... pressione K para renascer!");
+            KillPlayer();
         }
+    }
+
+    public void Heal (float valor)
+    {
+        Debug.Log($"Healando em : {valor}");
+        if (!estaVivo || isInvulnerable)
+            return;
+        else
+        {
+            if (vidaAtual + valor > vidaMaxima)
+                vidaAtual = vidaMaxima;
+            else
+                vidaAtual += valor;
+        }
+
+        if (vidaAtual <= 0 && estaVivo)
+        {
+            KillPlayer();
+        }
+    }
+
+    public void KillPlayer()
+    {
+        estaVivo = false;
+        numeroDeMortes++;
+
+        print("Voce morreu... pressione K para renascer!");
     }
 
     IEnumerator TeleportePlayer()

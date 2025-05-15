@@ -8,7 +8,8 @@ public class BagToggle : MonoBehaviour
     public InputHandler inputHandler;
 
     public GameObject bag;
-    public bool active = false;
+    public bool active = true;
+    //A bag deve começar ativo na UI, ou então vai dar OutOfBound assim que adicionar um item na bag!
 
     void Update()
     {
