@@ -20,8 +20,7 @@ public class InputHandler : MonoBehaviour
         inputHorizontal = Input.GetAxisRaw("Horizontal");
         inputVertical = Input.GetAxisRaw("Vertical");
         inputPulo = Input.GetKeyDown(KeyCode.Space);
-        inputCorrida = Input.GetKeyDown(KeyCode.RightShift);
-        inputCorrida = Input.GetKeyDown(KeyCode.LeftShift);
+        inputCorrida = Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift);
         inputDash = Input.GetKeyDown(KeyCode.LeftControl);
         inputReviver = Input.GetKeyDown(KeyCode.K);
         inputInteragir = Input.GetKeyDown(KeyCode.E);
