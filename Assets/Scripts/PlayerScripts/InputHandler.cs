@@ -22,6 +22,7 @@ public class InputHandler : MonoBehaviour
         inputPulo = Input.GetKeyDown(KeyCode.Space);
         inputCorrida = Input.GetKeyDown(KeyCode.RightShift);
         inputCorrida = Input.GetKeyDown(KeyCode.LeftShift);
+        inputDash = Input.GetKeyDown(KeyCode.LeftControl);
         inputReviver = Input.GetKeyDown(KeyCode.K);
         inputInteragir = Input.GetKeyDown(KeyCode.E);
         inputAbrirInventario = Input.GetKeyDown(KeyCode.I);

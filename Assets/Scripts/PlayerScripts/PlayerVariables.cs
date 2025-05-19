@@ -39,7 +39,7 @@ public class PlayerVariables : MonoBehaviour
             PlayerRevive();
         }
 
-        if (inputHandler.inputCorrida && staminaAtual >= 50)
+        if (inputHandler.inputCorrida && staminaAtual > 0)
         {
             
             Sprint();
