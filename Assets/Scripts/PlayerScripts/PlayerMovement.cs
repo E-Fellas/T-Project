@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public PlayerVariables playerVariables;
     public InputHandler inputHandler;
     public float moveSpeed = 8f;
+    public float baseSpeed = 8f;
     public float gravitForce = -9f;
     public Vector3 lastMoveDirection = Vector3.forward;
     public float alturaPulo = 5f;

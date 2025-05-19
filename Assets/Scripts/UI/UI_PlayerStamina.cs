@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class UI_PlayerStamina : MonoBehaviour
 {
     public PlayerVariables playerVariables;
-    public TextMeshProUGUI staminaText;
     public Image fillImage;
     private Slider slider;
 
@@ -28,7 +27,6 @@ public class UI_PlayerStamina : MonoBehaviour
             fillImage.enabled = true;
         }
 
-        staminaText.text = "Stamina: " + playerVariables.GetStaminaAtual();
         float fillValue = playerVariables.GetStaminaAtual() / playerVariables.staminaMaxima;
         slider.value = fillValue;
     }

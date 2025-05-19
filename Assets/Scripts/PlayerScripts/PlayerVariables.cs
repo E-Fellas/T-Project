@@ -17,6 +17,7 @@ public class PlayerVariables : MonoBehaviour
     public bool isDashing  = false;
     private bool isInvulnerable = false;
     public float dashDuration = 0.01f;
+    public float staminaDrain = 15f;
 
     private float vidaAtual;
     private float staminaAtual;
@@ -37,19 +38,13 @@ public class PlayerVariables : MonoBehaviour
         if (inputHandler.inputReviver && !estaVivo)
         {
             PlayerRevive();
-        }
-
-        if (inputHandler.inputCorrida && staminaAtual > 0)
-        {
-            
-            Sprint();
-        }
+        } 
 
         if (inputHandler.inputDash && staminaAtual >= 20)
         {
             Dash();
-        }        
-        
+        }
+        Sprint();
     }
 
     public bool GetestaVivo()
@@ -137,21 +132,42 @@ public class PlayerVariables : MonoBehaviour
 
     public void Sprint()
     {
-        if (estaVivo)
+        if (inputHandler.inputCorrida && staminaAtual > 0 && estaVivo && !sprintOn)
         {
             sprintOn = true;
-            StartCoroutine("SprintCoroutine");
-            staminaAtual = staminaAtual-20;
-            sprintOn = false;
+            playerMovement.moveSpeed = playerMovement.moveSpeed * 2f;
+
+            staminaAtual -= staminaDrain * Time.deltaTime;
+
+            if (staminaAtual <= 0)
+            {
+                staminaAtual = 0;
+                sprintOn = false;
+                playerMovement.moveSpeed = playerMovement.baseSpeed;
+            }
+        }
+        else if (inputHandler.inputCorrida && staminaAtual > 0 && estaVivo && sprintOn)
+        {
+            float staminaDrain = 15f;
+            staminaAtual -= staminaDrain * Time.deltaTime;
+
+            if (staminaAtual <= 0)
+            {
+                staminaAtual = 0;
+                sprintOn = false;
+                playerMovement.moveSpeed = playerMovement.baseSpeed;
+            }
+        }
+        else
+        {
+            if (sprintOn || playerMovement.moveSpeed != playerMovement.baseSpeed)
+            {
+                sprintOn = false;
+                playerMovement.moveSpeed = playerMovement.baseSpeed;
+            }
         }
     }
 
-    IEnumerator SprintCoroutine()
-    {
-        playerMovement.moveSpeed += sprintSpeed;
-        yield return new WaitForSeconds(staminaAtual / 50f);
-        playerMovement.moveSpeed -= sprintSpeed;
-    }
     public void Dash()
     {
         if (!isDashing && estaVivo)
