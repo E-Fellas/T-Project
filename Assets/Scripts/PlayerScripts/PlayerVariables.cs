@@ -170,32 +170,33 @@ public class PlayerVariables : MonoBehaviour
 
     public void Dash()
     {
-        if (!isDashing && estaVivo)
+        if (!isDashing && estaVivo && staminaAtual >= 20f)
         {
             isDashing = true;
+            staminaAtual -= 20f;
             StartCoroutine(DashCoroutine());
-            StartCoroutine(MakeInvulnerable(0.2f)); //Add MakeInvulnerable Function to playerVariables
+            //StartCoroutine(MakeInvulnerable(0.2f)); //Add MakeInvulnerable Function to playerVariables
         }
     }
 
     IEnumerator DashCoroutine()
-    {
-        isDashing = true;    
-        float originalMoveSpeed = playerMovement.moveSpeed;
-        playerMovement.moveSpeed *= 2.5f;// Fiz a velocidade ser equivalente a 2.5* a normal, mas podemos alterar
-        float dashDistance = playerMovement.moveSpeed * dashDuration;
+    {  
+        float originalMoveSpeed = playerMovement.baseSpeed;
+        float dashSpeed = originalMoveSpeed;
+        dashSpeed *= 5f;// Fiz a velocidade ser equivalente a 2.5* a normal, mas podemos alterar
+        float dashDistance = originalMoveSpeed * dashDuration;
         Vector3 dashDirection = playerMovement.transform.forward;// Direção a frente da visão do personagem.
         float distanceTraveled = 0f;
         while (distanceTraveled < dashDistance)
         {
-            float dashMove = playerMovement.moveSpeed * Time.deltaTime;
+            float dashMove = dashSpeed * Time.deltaTime;
             playerMovement.controller.Move(dashDirection * dashMove);
             distanceTraveled += dashMove;
             yield return null;
         }
         playerMovement.controller.Move(dashDirection * (dashDistance - distanceTraveled));
 
-        playerMovement.moveSpeed = originalMoveSpeed;
+        //playerMovement.moveSpeed = originalMoveSpeed;
         isDashing = false;
         yield break;
     }
