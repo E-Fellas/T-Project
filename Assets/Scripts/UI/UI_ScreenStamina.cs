@@ -9,6 +9,6 @@ public class UI_ScreenStamina : MonoBehaviour
     public TextMeshProUGUI staminaText;
     void Update()
     {
-        staminaText.text = "Stamina: " + playerVariables.GetStaminaAtual();
+        staminaText.text = "Stamina: " + playerVariables.GetStaminaAtual().ToString("F0");
     }
 }

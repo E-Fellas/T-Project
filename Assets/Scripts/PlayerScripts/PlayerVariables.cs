@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class PlayerVariables : MonoBehaviour
@@ -15,12 +16,20 @@ public class PlayerVariables : MonoBehaviour
     public float dashSpeed = 5;
     public bool sprintOn = false;
     public bool isDashing  = false;
+    public bool canDash = true;
     private bool isInvulnerable = false;
     public float dashDuration = 0.01f;
+    public float staminaDrain = 15f;
+    public float staminaRecover = 10f;
+    public float staminaRecoverTime = 0f;
 
     private float vidaAtual;
     private float staminaAtual;
     private bool estaVivo = true;
+
+    //Animação do Sprint
+    public TrailRenderer sprintParticle;
+    public TrailRenderer dashParticle;
 
     //posi��o inicial da cena
     public Vector3 posicaoRevive = new Vector3(0f, 2f, 0f);
@@ -29,6 +38,9 @@ public class PlayerVariables : MonoBehaviour
     {
         vidaAtual = vidaMaxima;
         staminaAtual = staminaMaxima;
+
+        sprintParticle.emitting = false;
+        dashParticle.emitting = false;
         //playerMovement.moveSpeed  =  0;
     }
 
@@ -37,19 +49,14 @@ public class PlayerVariables : MonoBehaviour
         if (inputHandler.inputReviver && !estaVivo)
         {
             PlayerRevive();
-        }
-
-        if (inputHandler.inputCorrida && staminaAtual > 0)
-        {
-            
-            Sprint();
-        }
+        } 
 
         if (inputHandler.inputDash && staminaAtual >= 20)
         {
             Dash();
-        }        
-        
+        }
+        Sprint();
+        RecoverStamina();
     }
 
     public bool GetestaVivo()
@@ -135,53 +142,128 @@ public class PlayerVariables : MonoBehaviour
         Debug.Log("Revivendo...");
     }
 
-    public void Sprint()
+    private void RecoverStamina()
     {
-        if (estaVivo)
+        //Isso é pra por um delay entre gastar stamina e receber stamina, o delay é setado nos lugares que gasta stamina, atualmente nos métodos de Sprint e Dash
+        if (staminaRecoverTime > 0)
         {
-            sprintOn = true;
-            StartCoroutine("SprintCoroutine");
-            staminaAtual = staminaAtual-20;
-            sprintOn = false;
+            staminaRecoverTime -= Time.deltaTime;
+            return;
+        }
+
+        if (!sprintOn && !isDashing && staminaAtual < 100)
+        {
+            staminaAtual += staminaRecover * Time.deltaTime;
+
+            if (staminaAtual > 100)
+                staminaAtual = staminaMaxima;
         }
     }
 
-    IEnumerator SprintCoroutine()
+    public void Sprint()
     {
-        playerMovement.moveSpeed += sprintSpeed;
-        yield return new WaitForSeconds(staminaAtual / 50f);
-        playerMovement.moveSpeed -= sprintSpeed;
+        if (inputHandler.inputCorrida && staminaAtual > 0 && estaVivo && !sprintOn && (inputHandler.inputHorizontal != 0 || inputHandler.inputVertical !=0))
+        {
+            sprintOn = true;
+            playerMovement.moveSpeed = playerMovement.moveSpeed * 2f;
+
+            staminaAtual -= staminaDrain * Time.deltaTime;
+            staminaRecoverTime = 2f;
+
+            ToggleSprintParticles(true);
+
+            if (staminaAtual <= 0)
+            {
+                staminaAtual = 0;
+                sprintOn = false;
+                playerMovement.moveSpeed = playerMovement.baseSpeed;
+
+                ToggleSprintParticles(false);
+            }
+        }
+        else if (inputHandler.inputCorrida && staminaAtual > 0 && estaVivo && sprintOn && (inputHandler.inputHorizontal != 0 || inputHandler.inputVertical != 0))
+        {
+            staminaAtual -= staminaDrain * Time.deltaTime;
+            staminaRecoverTime = 2f;
+
+            ToggleSprintParticles(true);
+
+            if (staminaAtual <= 0)
+            {
+                staminaAtual = 0;
+                sprintOn = false;
+                playerMovement.moveSpeed = playerMovement.baseSpeed;
+
+                ToggleSprintParticles(false);
+            }
+        }
+        else
+        {
+            if (sprintOn || playerMovement.moveSpeed != playerMovement.baseSpeed)
+            {
+                sprintOn = false;
+                playerMovement.moveSpeed = playerMovement.baseSpeed;
+
+                ToggleSprintParticles(false);
+            }
+        }
     }
+
+    private void ToggleSprintParticles(bool enabled)
+    {
+        if (sprintParticle != null)
+            sprintParticle.emitting = enabled;
+    }
+
+
     public void Dash()
     {
-        if (!isDashing && estaVivo)
+        if (!isDashing && playerMovement.contatoChao && estaVivo && staminaAtual >= 20f && canDash)
         {
             isDashing = true;
+            canDash = false; //Só controla o Cooldown do dash
+            staminaAtual -= 20f;
+            staminaRecoverTime = 2f;
+
             StartCoroutine(DashCoroutine());
-            StartCoroutine(MakeInvulnerable(0.2f)); //Add MakeInvulnerable Function to playerVariables
+            //StartCoroutine(MakeInvulnerable(0.2f)); //Add MakeInvulnerable Function to playerVariables
+            StartCoroutine(DashSleep());
         }
     }
 
     IEnumerator DashCoroutine()
-    {
-        isDashing = true;    
-        float originalMoveSpeed = playerMovement.moveSpeed;
-        playerMovement.moveSpeed *= 2.5f;// Fiz a velocidade ser equivalente a 2.5* a normal, mas podemos alterar
-        float dashDistance = playerMovement.moveSpeed * dashDuration;
+    {  
+        float originalMoveSpeed = playerMovement.baseSpeed;
+        float dashSpeed = originalMoveSpeed;
+        dashSpeed *= 5f;// Fiz a velocidade ser equivalente a 2.5* a normal, mas podemos alterar
+        float dashDistance = originalMoveSpeed * dashDuration;
         Vector3 dashDirection = playerMovement.transform.forward;// Direção a frente da visão do personagem.
         float distanceTraveled = 0f;
+
+        if (dashParticle != null)
+            dashParticle.emitting = true;
+
         while (distanceTraveled < dashDistance)
         {
-            float dashMove = playerMovement.moveSpeed * Time.deltaTime;
+            float dashMove = dashSpeed * Time.deltaTime;
             playerMovement.controller.Move(dashDirection * dashMove);
             distanceTraveled += dashMove;
             yield return null;
         }
         playerMovement.controller.Move(dashDirection * (dashDistance - distanceTraveled));
 
-        playerMovement.moveSpeed = originalMoveSpeed;
+        if (dashParticle != null)
+            dashParticle.emitting = false;
+
+        //playerMovement.moveSpeed = originalMoveSpeed;
         isDashing = false;
         yield break;
+    }
+
+    IEnumerator DashSleep()
+    {
+        yield return new WaitForSeconds(0.5f); //timing do CD do dash
+        canDash = true;
     }
     public IEnumerator MakeInvulnerable(float invulnerableDuration)
     {        
