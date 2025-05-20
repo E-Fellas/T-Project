@@ -20,6 +20,8 @@ public class PlayerVariables : MonoBehaviour
     private bool isInvulnerable = false;
     public float dashDuration = 0.01f;
     public float staminaDrain = 15f;
+    public float staminaRecover = 10f;
+    public float staminaRecoverTime = 0f;
 
     private float vidaAtual;
     private float staminaAtual;
@@ -47,6 +49,7 @@ public class PlayerVariables : MonoBehaviour
             Dash();
         }
         Sprint();
+        RecoverStamina();
     }
 
     public bool GetestaVivo()
@@ -132,6 +135,24 @@ public class PlayerVariables : MonoBehaviour
         Debug.Log("Revivendo...");
     }
 
+    private void RecoverStamina()
+    {
+        //Isso é pra por um delay entre gastar stamina e receber stamina, o delay é setado nos lugares que gasta stamina, atualmente nos métodos de Sprint e Dash
+        if (staminaRecoverTime > 0)
+        {
+            staminaRecoverTime -= Time.deltaTime;
+            return;
+        }
+
+        if (!sprintOn && !isDashing && staminaAtual < 100)
+        {
+            staminaAtual += staminaRecover * Time.deltaTime;
+
+            if (staminaAtual > 100)
+                staminaAtual = staminaMaxima;
+        }
+    }
+
     public void Sprint()
     {
         if (inputHandler.inputCorrida && staminaAtual > 0 && estaVivo && !sprintOn)
@@ -140,6 +161,7 @@ public class PlayerVariables : MonoBehaviour
             playerMovement.moveSpeed = playerMovement.moveSpeed * 2f;
 
             staminaAtual -= staminaDrain * Time.deltaTime;
+            staminaRecoverTime = 2f;
 
             if (staminaAtual <= 0)
             {
@@ -150,8 +172,8 @@ public class PlayerVariables : MonoBehaviour
         }
         else if (inputHandler.inputCorrida && staminaAtual > 0 && estaVivo && sprintOn)
         {
-            float staminaDrain = 15f;
             staminaAtual -= staminaDrain * Time.deltaTime;
+            staminaRecoverTime = 2f;
 
             if (staminaAtual <= 0)
             {
@@ -170,6 +192,7 @@ public class PlayerVariables : MonoBehaviour
         }
     }
 
+
     public void Dash()
     {
         if (!isDashing && playerMovement.contatoChao && estaVivo && staminaAtual >= 20f && canDash)
@@ -177,6 +200,8 @@ public class PlayerVariables : MonoBehaviour
             isDashing = true;
             canDash = false; //Só controla o Cooldown do dash
             staminaAtual -= 20f;
+            staminaRecoverTime = 2f;
+
             StartCoroutine(DashCoroutine());
             //StartCoroutine(MakeInvulnerable(0.2f)); //Add MakeInvulnerable Function to playerVariables
             StartCoroutine(DashSleep());
