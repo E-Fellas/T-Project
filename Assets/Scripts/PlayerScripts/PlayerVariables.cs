@@ -27,6 +27,10 @@ public class PlayerVariables : MonoBehaviour
     private float staminaAtual;
     private bool estaVivo = true;
 
+    //Animação do Sprint
+    public TrailRenderer sprintParticle;
+    public TrailRenderer dashParticle;
+
     //posi��o inicial da cena
     public Vector3 posicaoRevive = new Vector3(0f, 2f, 0f);
 
@@ -34,6 +38,9 @@ public class PlayerVariables : MonoBehaviour
     {
         vidaAtual = vidaMaxima;
         staminaAtual = staminaMaxima;
+
+        sprintParticle.emitting = false;
+        dashParticle.emitting = false;
         //playerMovement.moveSpeed  =  0;
     }
 
@@ -163,11 +170,15 @@ public class PlayerVariables : MonoBehaviour
             staminaAtual -= staminaDrain * Time.deltaTime;
             staminaRecoverTime = 2f;
 
+            ToggleSprintParticles(true);
+
             if (staminaAtual <= 0)
             {
                 staminaAtual = 0;
                 sprintOn = false;
                 playerMovement.moveSpeed = playerMovement.baseSpeed;
+
+                ToggleSprintParticles(false);
             }
         }
         else if (inputHandler.inputCorrida && staminaAtual > 0 && estaVivo && sprintOn)
@@ -175,11 +186,15 @@ public class PlayerVariables : MonoBehaviour
             staminaAtual -= staminaDrain * Time.deltaTime;
             staminaRecoverTime = 2f;
 
+            ToggleSprintParticles(true);
+
             if (staminaAtual <= 0)
             {
                 staminaAtual = 0;
                 sprintOn = false;
                 playerMovement.moveSpeed = playerMovement.baseSpeed;
+
+                ToggleSprintParticles(false);
             }
         }
         else
@@ -188,8 +203,16 @@ public class PlayerVariables : MonoBehaviour
             {
                 sprintOn = false;
                 playerMovement.moveSpeed = playerMovement.baseSpeed;
+
+                ToggleSprintParticles(false);
             }
         }
+    }
+
+    private void ToggleSprintParticles(bool enabled)
+    {
+        if (sprintParticle != null)
+            sprintParticle.emitting = enabled;
     }
 
 
@@ -216,6 +239,10 @@ public class PlayerVariables : MonoBehaviour
         float dashDistance = originalMoveSpeed * dashDuration;
         Vector3 dashDirection = playerMovement.transform.forward;// Direção a frente da visão do personagem.
         float distanceTraveled = 0f;
+
+        if (dashParticle != null)
+            dashParticle.emitting = true;
+
         while (distanceTraveled < dashDistance)
         {
             float dashMove = dashSpeed * Time.deltaTime;
@@ -224,6 +251,9 @@ public class PlayerVariables : MonoBehaviour
             yield return null;
         }
         playerMovement.controller.Move(dashDirection * (dashDistance - distanceTraveled));
+
+        if (dashParticle != null)
+            dashParticle.emitting = false;
 
         //playerMovement.moveSpeed = originalMoveSpeed;
         isDashing = false;
