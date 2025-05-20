@@ -162,7 +162,7 @@ public class PlayerVariables : MonoBehaviour
 
     public void Sprint()
     {
-        if (inputHandler.inputCorrida && staminaAtual > 0 && estaVivo && !sprintOn)
+        if (inputHandler.inputCorrida && staminaAtual > 0 && estaVivo && !sprintOn && (inputHandler.inputHorizontal != 0 || inputHandler.inputVertical !=0))
         {
             sprintOn = true;
             playerMovement.moveSpeed = playerMovement.moveSpeed * 2f;
@@ -181,7 +181,7 @@ public class PlayerVariables : MonoBehaviour
                 ToggleSprintParticles(false);
             }
         }
-        else if (inputHandler.inputCorrida && staminaAtual > 0 && estaVivo && sprintOn)
+        else if (inputHandler.inputCorrida && staminaAtual > 0 && estaVivo && sprintOn && (inputHandler.inputHorizontal != 0 || inputHandler.inputVertical != 0))
         {
             staminaAtual -= staminaDrain * Time.deltaTime;
             staminaRecoverTime = 2f;
