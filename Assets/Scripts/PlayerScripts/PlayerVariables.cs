@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class PlayerVariables : MonoBehaviour
@@ -15,6 +16,7 @@ public class PlayerVariables : MonoBehaviour
     public float dashSpeed = 5;
     public bool sprintOn = false;
     public bool isDashing  = false;
+    public bool canDash = true;
     private bool isInvulnerable = false;
     public float dashDuration = 0.01f;
     public float staminaDrain = 15f;
@@ -170,12 +172,14 @@ public class PlayerVariables : MonoBehaviour
 
     public void Dash()
     {
-        if (!isDashing && estaVivo && staminaAtual >= 20f)
+        if (!isDashing && playerMovement.contatoChao && estaVivo && staminaAtual >= 20f && canDash)
         {
             isDashing = true;
+            canDash = false; //Só controla o Cooldown do dash
             staminaAtual -= 20f;
             StartCoroutine(DashCoroutine());
             //StartCoroutine(MakeInvulnerable(0.2f)); //Add MakeInvulnerable Function to playerVariables
+            StartCoroutine(DashSleep());
         }
     }
 
@@ -199,6 +203,12 @@ public class PlayerVariables : MonoBehaviour
         //playerMovement.moveSpeed = originalMoveSpeed;
         isDashing = false;
         yield break;
+    }
+
+    IEnumerator DashSleep()
+    {
+        yield return new WaitForSeconds(0.5f); //timing do CD do dash
+        canDash = true;
     }
     public IEnumerator MakeInvulnerable(float invulnerableDuration)
     {        

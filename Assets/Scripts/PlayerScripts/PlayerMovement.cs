@@ -12,9 +12,9 @@ public class PlayerMovement : MonoBehaviour
     public float baseSpeed = 8f;
     public float gravitForce = -9f;
     public Vector3 lastMoveDirection = Vector3.forward;
-    public float alturaPulo = 5f;
+    public float alturaPulo = 4f;
 
-    private bool contatoChao;
+    public bool contatoChao;
     public float distanciaChao = -0.01f;
     public LayerMask groundMask;
     private Vector3 forcaGravidade;
@@ -69,7 +69,7 @@ public void handleMovement()
         Vector3 capsuleCenter = transform.position + controller.center;
         float capsuleRadius = controller.radius;
         float capsuleHeight = controller.height - 1.1f;
-        //eu legitimamente m�o sei pq eu tive que reduzir o tamanho da capsula pra funcionar... se alguem souber arrumar
+        //eu legitimamente não sei pq eu tive que reduzir o tamanho da capsula pra funcionar... se alguem souber arrumar
 
         contatoChao = Physics.CheckCapsule(capsuleCenter, capsuleCenter + Vector3.down * capsuleHeight, capsuleRadius, groundMask);
 
